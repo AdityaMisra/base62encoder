@@ -1,3 +1,7 @@
+import string
+base_string = string.digits + string.ascii_uppercase + string.ascii_lowercase
+
+
 def customized_encoder(real_number, base=None):
     partial_decoded_number = []
     number = real_number
@@ -17,10 +21,7 @@ def customized_encoder(real_number, base=None):
     print "Original Number - {}".format(real_number)
     print partial_decoded_number
 
-    import string
-    base_string = string.digits + string.ascii_uppercase + string.ascii_lowercase
-
-    base62_encoded_list = l
+    base62_encoded_list = map(lambda each_decoded_number: base_string[each_decoded_number], partial_decoded_number)
     base62_encoded_number = ''.join(base62_encoded_list)
 
     print "base62 encoded value - {}".format(base62_encoded_number)
@@ -29,3 +30,15 @@ def customized_encoder(real_number, base=None):
 
     # import random
     # random.shuffle(base_string_as_list)
+
+def customized_decoder(encoded_string, base=62):
+    original_number = 0
+    index_list = []
+    for i in encoded_string:
+        index_list.append(base_string.index(i))
+
+    index_list.reverse()
+    for idx, each_index_value in enumerate(index_list):
+        original_number += each_index_value * pow(base, idx)
+
+    print "Encoded String-{}\nOriginal Number-{}".format(encoded_string, original_number)
